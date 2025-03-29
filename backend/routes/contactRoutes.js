@@ -31,6 +31,7 @@ router.post("/add-contact", async (req, res) => {
       .status(201)
       .json({ message: "Inquiry added successfully", inquiry: newInquiry });
   } catch (error) {
+    console.log(error);
     res.status(500).json({ error: error.message });
   }
 });

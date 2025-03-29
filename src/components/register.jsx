@@ -3,6 +3,7 @@ import useJQueryValidation from "./useJQueryValidation";
 import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import GuestNavbar from "./guest_navbar";
 
 function Register() {
   const navigate = useNavigate();
@@ -163,11 +164,12 @@ function Register() {
 
   return (
     <div>
+      <GuestNavbar />
       <div className="max-w-md mx-auto mt-5">
         {/* Alert Message */}
         {statusMessage && (
           <div
-            className={`p-3 mb-4 text-white rounded-lg ${statusType === "success" ? "bg-green-500" : "bg-red-500"
+            className={`p-3  text-white rounded-lg ${statusType === "success" ? "bg-green-500" : "bg-red-500"
               }`}
           >
             {statusMessage}

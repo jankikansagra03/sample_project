@@ -2,6 +2,7 @@ import React from "react";
 import useJQueryValidation from "./useJQueryValidation";
 import axios from "axios";
 import { useState } from "react";
+import GuestNavbar from "./guest_navbar";
 
 function Contact() {
   useJQueryValidation("contact_form", {
@@ -79,6 +80,7 @@ function Contact() {
   }
   return (
     <div>
+      <GuestNavbar />
       <div className="max-w-[100rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">
         <div className="grid max-w-5xl gap-8 mx-auto mt-1 md:grid-cols-1 lg:grid-cols-2">
           {/* <!-- Contact Details Column --> */}

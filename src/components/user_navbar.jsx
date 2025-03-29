@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+// Link
 
 const UserNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -46,23 +48,23 @@ const UserNavbar = () => {
         >
           <div className="flex flex-col py-2 lg:items-center md:py-0 md:flex-row md:justify-end gap-y-2 md:gap-y-0">
             {[
-              { href: "orders.php", label: "My Orders", icon: "shopping-bag" },
+              { to: "orders.php", label: "My Orders", icon: "shopping-bag" },
               {
-                href: "cart.php",
+                to: "cart.php",
                 label: "Shopping Cart",
                 icon: "shopping-cart",
               },
-              { href: "wishlist.php", label: "Wishlist", icon: "heart" },
+              { to: "wishlist.php", label: "Wishlist", icon: "heart" },
               {
-                href: "profile.php",
+                to: "profile.php",
                 label: "My Profile",
                 icon: "contact-round",
               },
-              { href: "logout.php", label: "Logout", icon: "log-out" },
+              { to: "/logout", label: "Logout", icon: "log-out" },
             ].map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
+              <Link
+                key={item.to}
+                to={item.to}
                 className="flex items-center gap-2 px-3 py-2 text-sm font-medium text-white transition rounded-md hover:bg-white hover:text-amber-800 hover:p-2"
               >
                 <svg
@@ -112,7 +114,7 @@ const UserNavbar = () => {
                   )}
                 </svg>
                 <span>{item.label}</span>
-              </a>
+              </Link>
             ))}
           </div>
         </div>

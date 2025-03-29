@@ -1,8 +1,10 @@
 import React from "react";
+import GuestNavbar from "./guest_navbar";
 
 function Team() {
   return (
     <div>
+      <GuestNavbar />
       <br />
       <br />
       {/* <!-- Leadership Section --> */}

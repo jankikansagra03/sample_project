@@ -1,26 +1,28 @@
+import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const LogoutButton = () => {
-    // const navigate = useNavigate();
+const LogoutButton = ({ setUserIsLoggedIn, setIsAdminLoggedIn }) => {
+    const navigate = useNavigate();
 
-    const handleLogout = () => {
+    useEffect(() => {
         // Clear localStorage
-        localStorage.removeItem("token");
+        localStorage.removeItem("usertoken");
         localStorage.removeItem("user");
+        localStorage.removeItem("admintoken");
+        localStorage.removeItem("admin");
 
         // Clear sessionStorage (if used)
         sessionStorage.clear();
 
-        // Clear cookies (if applicable)
-        document.cookie.split(";").forEach((cookie) => {
-            document.cookie = cookie.replace(/^ +/, "").replace(/=.*/, "=;expires=Thu, 01 Jan 1970 00:00:00 GMT;path=/");
-        });
+        // Update state before navigating
+        setUserIsLoggedIn(false);
+        setIsAdminLoggedIn(false);
 
-        // Force page reload to clear cache
-        window.location.href = "/login"; // Full reload ensures fresh session
-    };
+        // Navigate to login page
+        navigate("/login");
+    }, [navigate, setUserIsLoggedIn, setIsAdminLoggedIn]);
 
-    return <button onClick={handleLogout} className="bg-red-500 text-white px-4 py-2 rounded">Logout</button>;
+    return null; // Component does not render anything
 };
 
 export default LogoutButton;

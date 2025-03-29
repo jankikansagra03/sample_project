@@ -1,193 +1,113 @@
 import React from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
 
 function Testimonial() {
+  const testimonials = [
+    {
+      name: "Sarah Johnson",
+      role: "Marketing Director",
+      image: "/Images/testimonials/1.png",
+      feedback:
+        "The service exceeded my expectations. The team was professional and delivered outstanding results.",
+    },
+    {
+      name: "Michael Chen",
+      role: "Tech Entrepreneur",
+      image: "/Images/testimonials/2.png",
+      feedback:
+        "I couldn't be happier with the outcome. Their attention to detail and commitment to quality is remarkable.",
+    },
+    {
+      name: "Emily Rodriguez",
+      role: "Operations Manager",
+      image: "/Images/testimonials/3.png",
+      feedback:
+        "A game-changing experience. Their innovative approach helped transform our business processes.",
+    },
+    {
+      name: "David Thompson",
+      role: "Business Owner",
+      image: "/Images/testimonials/5.png",
+      feedback:
+        "Working with this team has been a pleasure. They truly understand customer needs and deliver solutions.",
+    },
+    {
+      name: "Rachel Foster",
+      role: "Project Manager",
+      image: "/Images/testimonials/6.png",
+      feedback:
+        "Their expertise and dedication to customer satisfaction made all the difference in our project's success.",
+    },
+    {
+      name: "James Wilson",
+      role: "CEO, Innovation Tech",
+      image: "/Images/testimonials/7.png",
+      feedback:
+        "An exceptional team that consistently delivers high-quality solutions. They've become our trusted partner.",
+    },
+  ];
+
   return (
-    <div>
-      {/* <!-- Testimonials Carousel --> */}
-
-      <div
-        data-hs-carousel='{
-  "loadingclassNamees": "opacity-0", 
-  "dotsItemclassNamees": "hs-carousel-active:bg-amber-800 hs-carousel-active:border-amber-800 size-3 border-amber-800 rounded-full cursor-pointer",
-  "slidesQty": {
-    "xs": 1,
-    "md": 2,
-    "lg": 3
-  },
-  "isDraggable": true
-}'
-        className="relative max-w-[85rem] px-4 mx-auto"
+    <div className="relative max-w-[85rem] px-4 mx-auto">
+      {/* Swiper Container */}
+      <Swiper
+        modules={[Navigation]}
+        spaceBetween={20}
+        slidesPerView={1}
+        navigation={{ nextEl: ".next-btn", prevEl: ".prev-btn" }}
+        breakpoints={{
+          640: { slidesPerView: 1 },
+          768: { slidesPerView: 2 },
+          1024: { slidesPerView: 3 },
+        }}
+        className="relative z-10 rounded-lg"
       >
-        <div className="w-full overflow-hidden rounded-lg hs-carousel">
-          <div className="relative min-h-[300px] -mx-1">
-            <div className="absolute top-0 bottom-0 flex transition-transform duration-700 opacity-0 hs-carousel-body start-0 flex-nowrap cursor-grab hs-carousel-dragging:transition-none hs-carousel-dragging:cursor-grabbing">
-              {/* <!-- Testimonial 1 --> */}
-              <div className="px-1 hs-carousel-slide">
-                <div className="flex flex-col items-center h-full p-6 text-center rounded-lg bg-amber-50">
-                  <img
-                    className="object-cover w-20 h-20 mb-4 rounded-full"
-                    src="../Images/testimonials/1.png"
-                    alt="Sarah Johnson"
-                  />
-                  <p className="mb-2 italic text-gray-600">
-                    "The service exceeded my expectations. The team was
-                    professional and delivered outstanding results."
-                  </p>
-                  <div className="">
-                    <h4 className="font-semibold text-amber-800">Sarah Johnson</h4>
-                    <p className="text-sm text-gray-500">Marketing Director</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* <!-- Testimonial 2 --> */}
-              <div className="px-1 hs-carousel-slide">
-                <div className="flex flex-col items-center h-full p-6 text-center rounded-lg bg-amber-50">
-                  <img
-                    className="object-cover w-20 h-20 mb-4 rounded-full"
-                    src="../Images/testimonials/2.png"
-                    alt="Michael Chen"
-                  />
-                  <p className="mb-4 italic text-gray-600">
-                    "I couldn't be happier with the outcome. Their attention to
-                    detail and commitment to quality is remarkable."
-                  </p>
-                  <div>
-                    <h4 className="font-semibold text-amber-800">Michael Chen</h4>
-                    <p className="text-sm text-gray-500">Tech Entrepreneur</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* <!-- Testimonial 3 --> */}
-              <div className="px-1 hs-carousel-slide">
-                <div className="flex flex-col items-center h-full p-6 text-center rounded-lg bg-amber-50">
-                  <img
-                    className="object-cover w-20 h-20 mb-4 rounded-full"
-                    src="../Images/testimonials/3.png"
-                    alt="Emily Rodriguez"
-                  />
-                  <p className="mb-4 italic text-gray-600">
-                    "A game-changing experience. Their innovative approach
-                    helped transform our business processes."
-                  </p>
-                  <div>
-                    <h4 className="font-semibold text-amber-800">
-                      Emily Rodriguez
-                    </h4>
-                    <p className="text-sm text-gray-500">Operations Manager</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* <!-- Testimonial 4 --> */}
-              <div className="px-1 hs-carousel-slide">
-                <div className="flex flex-col items-center h-full p-6 text-center rounded-lg bg-amber-50">
-                  <img
-                    className="object-cover w-20 h-20 mb-4 rounded-full"
-                    src="../Images/testimonials/5.png"
-                    alt="David Thompson"
-                  />
-                  <p className="mb-4 italic text-gray-600">
-                    "Working with this team has been a pleasure. They truly
-                    understand customer needs and deliver solutions."
-                  </p>
-                  <div>
-                    <h4 className="font-semibold text-amber-800">David Thompson</h4>
-                    <p className="text-sm text-gray-500">Business Owner</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* <!-- Testimonial 5 --> */}
-              <div className="px-1 hs-carousel-slide">
-                <div className="flex flex-col items-center h-full p-6 text-center rounded-lg bg-amber-50">
-                  <img
-                    className="object-cover w-20 h-20 mb-4 rounded-full"
-                    src="../Images/testimonials/6.png"
-                    alt="Rachel Foster"
-                  />
-                  <p className="mb-4 italic text-gray-600">
-                    "Their expertise and dedication to customer satisfaction
-                    made all the difference in our project's success."
-                  </p>
-                  <div>
-                    <h4 className="font-semibold text-amber-800">Rachel Foster</h4>
-                    <p className="text-sm text-gray-500">Project Manager</p>
-                  </div>
-                </div>
-              </div>
-
-              {/* <!-- Testimonial 6 --> */}
-              <div className="px-1 hs-carousel-slide">
-                <div className="flex flex-col items-center h-full p-6 text-center rounded-lg bg-amber-50">
-                  <img
-                    className="object-cover w-20 h-20 mb-4 rounded-full"
-                    src="../Images/testimonials/7.png"
-                    alt="James Wilson"
-                  />
-                  <p className="mb-4 italic text-gray-600">
-                    "An exceptional team that consistently delivers high-quality
-                    solutions. They've become our trusted partner."
-                  </p>
-                  <div>
-                    <h4 className="font-semibold text-amber-800">James Wilson</h4>
-                    <p className="text-sm text-gray-500">CEO, Innovation Tech</p>
-                  </div>
-                </div>
-              </div>
+        {testimonials.map((testimonial, index) => (
+          <SwiperSlide key={index} className="flex justify-center">
+            <div className="flex flex-col items-center h-full p-6 text-center rounded-lg bg-amber-50 shadow-md">
+              <img
+                className="object-cover w-20 h-20 mb-4 rounded-full"
+                src={testimonial.image}
+                alt={testimonial.name}
+              />
+              <p className="mb-2 italic text-gray-600">{testimonial.feedback}</p>
+              <h4 className="font-semibold text-amber-800">{testimonial.name}</h4>
+              <p className="text-sm text-gray-500">{testimonial.role}</p>
             </div>
-          </div>
-        </div>
+          </SwiperSlide>
+        ))}
+      </Swiper>
 
-        <button
-          type="button"
-          className="hs-carousel-prev hs-carousel-disabled:opacity-50 hs-carousel-disabled:pointer-events-none absolute inset-y-0 start-0 inline-flex justify-center items-center w-[46px] h-full text-amber-800 hover:bg-amber-800/10 focus:outline-none focus:bg-amber-800/10 rounded-s-lg"
+      {/* Navigation Buttons */}
+      <button className="prev-btn absolute left-0 top-1/2 -translate-y-1/2 z-20 px-3 py-2 text-amber-800 hover:bg-amber-800/10 rounded-full shadow-md focus:outline-none">
+        <svg
+          className="w-6 h-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
         >
-          <span className="text-2xl" aria-hidden="true">
-            <svg
-              className="shrink-0 size-5"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="m15 18-6-6 6-6"></path>
-            </svg>
-          </span>
-          <span className="sr-only">Previous</span>
-        </button>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+        </svg>
+      </button>
 
-        <button
-          type="button"
-          className="hs-carousel-next hs-carousel-disabled:opacity-50 hs-carousel-disabled:pointer-events-none absolute inset-y-0 end-0 inline-flex justify-center items-center w-[46px] h-full text-amber-800 hover:bg-amber-800/10 focus:outline-none focus:bg-amber-800/10 rounded-e-lg"
+      <button className="next-btn absolute right-0 top-1/2 -translate-y-1/2 z-20 px-3 py-2 text-amber-800 hover:bg-amber-800/10 rounded-full shadow-md focus:outline-none">
+        <svg
+          className="w-6 h-6"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
         >
-          <span className="sr-only">Next</span>
-          <span className="text-2xl" aria-hidden="true">
-            <svg
-              className="shrink-0 size-5"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              viewBox="0 0 24 24"
-              fill="none"
-              stroke="currentColor"
-              stroke-width="2"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-            >
-              <path d="m9 18 6-6-6-6"></path>
-            </svg>
-          </span>
-        </button>
-
-        <div className="absolute flex justify-center space-x-2 hs-carousel-pagination bottom-3 start-0 end-0"></div>
-      </div>
+          <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+        </svg>
+      </button>
+      <br />
     </div>
   );
 }

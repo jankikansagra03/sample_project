@@ -1,8 +1,11 @@
 import React from "react";
+import GuestNavbar from "./guest_navbar";
 
 function About() {
   return (
     <div>
+      <GuestNavbar />
+      <br />
       <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-2 mx-auto">
         {/* <!-- Title --> */}
         <div className="max-w-2xl mx-auto mb-5 text-center lg:mb-5">

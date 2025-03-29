@@ -147,7 +147,6 @@ router.get("/verify-email/:token", async (req, res) => {
   } catch (error) {
     return res.redirect(
       "http://localhost:5173/login?status=error&message=Verification failed or token expired."
-        .error
     );
   }
 });
@@ -159,13 +158,18 @@ router.post("/login", async (req, res) => {
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ error: "User not found." });
+      // console.log("User not found");
+      return res
+        .status(400)
+        .json({ status: "error", message: "Email is not registered!" });
     }
 
     // Verify password
-    const isMatch = await bcrypt.compare(password, user.password);
-    if (!isMatch) {
-      return res.status(400).json({ error: "Invalid credentials." });
+    // const isMatch = await compare(password, user.password);
+    if (password !== user.password) {
+      return res
+        .status(400)
+        .json({ status: "error", message: "Incorrect password!" });
     }
 
     // Generate JWT Token
@@ -180,6 +184,7 @@ router.post("/login", async (req, res) => {
     // Send token & user details
     res.status(200).json({
       message: "Login successful",
+      status: "success",
       token,
       user: {
         id: user._id,
@@ -189,6 +194,7 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
+    // console.log(error);
     res.status(500).json({ error: "Something went wrong." });
   }
 });
@@ -200,6 +206,27 @@ router.get("/all-users", async (req, res) => {
     res.status(200).json({ users });
   } catch (error) {
     res.status(500).json({ error: error.message });
+  }
+});
+
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
+      new: true,
+    });
+    res.json(updatedUser);
+  } catch (err) {
+    res.status(500).json({ message: "Error updating user" });
+  }
+});
+
+// Delete user by ID
+router.delete("/:id", async (req, res) => {
+  try {
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ message: "Error deleting user" });
   }
 });
 

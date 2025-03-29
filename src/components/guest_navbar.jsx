@@ -24,7 +24,7 @@ const Navbar = () => {
               isActive ? "underline" : "hover:underline"
             }
           >
-            <div className="flex items-center gap-2">
+            <div className="flex justify-start gap-2">
               <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-house"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8" /><path d="M3 10a2 2 0 0 1 .709-1.528l7-5.999a2 2 0 0 1 2.582 0l7 5.999A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /></svg>
               Home
             </div>
@@ -79,6 +79,30 @@ const Navbar = () => {
               Blog
             </div>
           </NavLink>
+          {!userSession && !adminSession && (
+            <>
+              <NavLink to="/login" className="bg-white text-amber-800 px-4 py-2 rounded hover:bg-gray-200"
+                onClick={closeMenu}
+              >
+                <div className="flex items-center gap-2 w-full">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /><polyline points="10 17 15 12 10 7" /><line x1="15" x2="3" y1="12" y2="12" /></svg>
+                  Login
+                </div>
+
+              </NavLink>
+              <NavLink
+                to="/register"
+                className="bg-white text-amber-800 px-4 py-2 rounded hover:bg-gray-200"
+                onClick={closeMenu}
+              >
+                <div className="flex items-center gap-2">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-user-plus"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><line x1="19" x2="19" y1="8" y2="14" /><line x1="22" x2="16" y1="11" y2="11" /></svg>
+                  Register
+                </div>
+
+              </NavLink>
+            </>
+          )}
         </div>
 
         <button
@@ -90,7 +114,7 @@ const Navbar = () => {
         </button>
       </div>
       <div
-        className={`md:hidden flex flex-col items-center space-y-4 mt-4 transition-all duration-300 ${isOpen ? "block" : "hidden"
+        className={`md:hidden flex flex-col pl-7 space-y-4 mt-4 transition-all duration-300 ${isOpen ? "block" : "hidden"
           }`}
       >
         <NavLink to="/" className="hover:underline" onClick={closeMenu}>
@@ -133,11 +157,11 @@ const Navbar = () => {
 
         </NavLink>
         {!userSession && !adminSession && (
-          <div>
+          <>
             <NavLink to="/login" className="bg-white text-amber-800 px-4 py-2 rounded hover:bg-gray-200"
               onClick={closeMenu}
             >
-              <div className="flex items-center gap-2">
+              <div className="flex items-center gap-2 w-full">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="lucide lucide-log-in"><path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4" /><polyline points="10 17 15 12 10 7" /><line x1="15" x2="3" y1="12" y2="12" /></svg>
                 Login
               </div>
@@ -154,7 +178,7 @@ const Navbar = () => {
               </div>
 
             </NavLink>
-          </div>
+          </>
         )}
       </div>
     </nav>
