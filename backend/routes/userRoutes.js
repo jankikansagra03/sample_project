@@ -44,9 +44,7 @@ router.post("/add-user", upload.single("profilePic"), async (req, res) => {
     } = req.body;
 
     if (!fullname || !email || !mobile || !password || !gender || !state) {
-      return res
-        .status(400)
-        .json({ error: "All required fields must be provided." });
+      return res.status(400).json({ error: "All required fields must be provided." });
     }
 
     // Check if user exists
@@ -115,8 +113,7 @@ router.post("/add-user", upload.single("profilePic"), async (req, res) => {
     });
 
     res.status(201).json({
-      message:
-        "User added successfully. Check your email to verify your account.",
+      message: "User added successfully. Check your email to verify your account.",
       user: newUser,
     });
   } catch (error) {
@@ -151,6 +148,7 @@ router.get("/verify-email/:token", async (req, res) => {
   }
 });
 
+// Login Route
 router.post("/login", async (req, res) => {
   try {
     const { email, password } = req.body;
@@ -158,28 +156,18 @@ router.post("/login", async (req, res) => {
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      // console.log("User not found");
-      return res
-        .status(400)
-        .json({ status: "error", message: "Email is not registered!" });
+      return res.status(400).json({ status: "error", message: "Email is not registered!" });
     }
 
     // Verify password
-    // const isMatch = await compare(password, user.password);
     if (password !== user.password) {
-      return res
-        .status(400)
-        .json({ status: "error", message: "Incorrect password!" });
+      return res.status(400).json({ status: "error", message: "Incorrect password!" });
     }
 
     // Generate JWT Token
-    const token = jwt.sign(
-      { userId: user._id, role: user.role },
-      process.env.JWT_SECRET,
-      {
-        expiresIn: "1h", // Token expires in 1 hour
-      }
-    );
+    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
+      expiresIn: "1h", // Token expires in 1 hour
+    });
 
     // Send token & user details
     res.status(200).json({
@@ -194,7 +182,6 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
-    // console.log(error);
     res.status(500).json({ error: "Something went wrong." });
   }
 });
@@ -209,24 +196,39 @@ router.get("/all-users", async (req, res) => {
   }
 });
 
-router.put("/:id", async (req, res) => {
+// View User by ID (GET)
+router.get("/user/:id", async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, {
-      new: true,
-    });
-    res.json(updatedUser);
-  } catch (err) {
-    res.status(500).json({ message: "Error updating user" });
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+    res.json(user);
+  } catch (error) {
+    res.status(500).json({ message: "Error fetching user details",error:error.message});
   }
 });
 
-// Delete user by ID
+// Update User by ID (PUT)
+router.put("/:id", async (req, res) => {
+  try {
+    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    res.json(updatedUser);
+  } catch (error) {
+    res.status(500).json({ message: "Error updating user",error:error.message });
+  }
+});
+
+// Delete User by ID (DELETE)
 router.delete("/:id", async (req, res) => {
   try {
-    await User.findByIdAndDelete(req.params.id);
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    if (!deletedUser) {
+      return res.status(404).json({ message: "User not found" });
+    }
     res.json({ message: "User deleted successfully" });
-  } catch (err) {
-    res.status(500).json({ message: "Error deleting user" });
+  } catch (error) {
+    res.status(500).json({ message: "Error deleting user" ,error:error.message});
   }
 });
 

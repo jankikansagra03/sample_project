@@ -1,5 +1,4 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { createIcons, icons } from "lucide";
 import "./App.css";
 import UserNavbar from "./components/user_navbar";
 import GuestNavbar from "./components/guest_navbar";
@@ -13,13 +12,12 @@ import Team from "./components/team";
 import Blog from "./components/blog";
 import AdminPanel from "./components/admin_navbar";
 import LogoutButton from "./components/logout";
-// import Contact from "./pages/Contact";
 import { useState, useEffect } from "react";
 import ManageUsers from "./components/manage_users";
 import UserDashboard from "./components/user_dashboard";
 import ManageProducts from "./components/manage_products";
 import AdminDashboard from "./components/admin_dashboard";
-import DataTable from "./components/datatable";
+// import DataTable from "./components/datatable";
 
 function App() {
   const userSession = localStorage.getItem("user"); // User session
@@ -43,11 +41,9 @@ function App() {
     } else {
       setIsAdminLoggedIn(false);
     }
-
   }, [userSession, adminSession]);
   return (
     <Router>
-
       <Routes>
         {/* <Route path="/" element={<AdminPanel />}> */}
         <Route path="/" element={<Home />} />
@@ -57,18 +53,44 @@ function App() {
         <Route path="/contact" element={<Contact />} />
         <Route path="/team" element={<Team />} />
         <Route path="/blog" element={<Blog />} />
-        <Route path="/logout" element={<LogoutButton setUserIsLoggedIn={setUserIsLoggedIn} setIsAdminLoggedIn={setIsAdminLoggedIn} />} />
+        <Route
+          path="/logout"
+          element={
+            <LogoutButton
+              setUserIsLoggedIn={setUserIsLoggedIn}
+              setIsAdminLoggedIn={setIsAdminLoggedIn}
+            />
+          }
+        />
 
         <Route path="/user-dashboard" element={<UserDashboard />} />
 
-        <Route path="/admin-dashboard" element={<AdminPanel><AdminDashboard /></AdminPanel>} />
-        <Route path="/admin/manage-users" element={<AdminPanel><DataTable /></AdminPanel>} />
-        <Route path="/admin/manage-products" element={<AdminPanel><ManageProducts /></AdminPanel>} />
-
-
+        <Route
+          path="/admin-dashboard"
+          element={
+            <AdminPanel>
+              <AdminDashboard />
+            </AdminPanel>
+          }
+        />
+        <Route
+          path="/admin/manage-users"
+          element={
+            <AdminPanel>
+              <ManageUsers />
+            </AdminPanel>
+          }
+        />
+        <Route
+          path="/admin/manage-products"
+          element={
+            <AdminPanel>
+              <ManageProducts />
+            </AdminPanel>
+          }
+        />
       </Routes>
-
-    </Router >
+    </Router>
   );
 }
 
