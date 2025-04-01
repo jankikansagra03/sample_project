@@ -19,6 +19,7 @@ import ManageUsers from "./components/manage_users";
 import UserDashboard from "./components/user_dashboard";
 import ManageProducts from "./components/manage_products";
 import AdminDashboard from "./components/admin_dashboard";
+import DataTable from "./components/datatable";
 
 function App() {
   const userSession = localStorage.getItem("user"); // User session
@@ -61,7 +62,7 @@ function App() {
         <Route path="/user-dashboard" element={<UserDashboard />} />
 
         <Route path="/admin-dashboard" element={<AdminPanel><AdminDashboard /></AdminPanel>} />
-        <Route path="/admin/manage-users" element={<AdminPanel><ManageUsers /></AdminPanel>} />
+        <Route path="/admin/manage-users" element={<AdminPanel><DataTable /></AdminPanel>} />
         <Route path="/admin/manage-products" element={<AdminPanel><ManageProducts /></AdminPanel>} />
 
 
