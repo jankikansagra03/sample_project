@@ -197,7 +197,7 @@ router.get("/all-users", async (req, res) => {
 });
 
 // View User by ID (GET)
-router.get("/user/:id", async (req, res) => {
+router.get("/users/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {

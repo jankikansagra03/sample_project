@@ -54,7 +54,7 @@ function Login() {
       // Store user token and details
       localStorage.setItem(`${data.user.role}token`, data.token);
       localStorage.setItem(data.user.role, JSON.stringify(data.user));
-      window.dispatchEvent(new Event("authChange"));
+      // window.dispatchEvent(new Event("authChange"));
 
       setStatusMessage(data.message);
       setStatusType(data.status);

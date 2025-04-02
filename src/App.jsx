@@ -17,6 +17,8 @@ import ManageUsers from "./components/manage_users";
 import UserDashboard from "./components/user_dashboard";
 import ManageProducts from "./components/manage_products";
 import AdminDashboard from "./components/admin_dashboard";
+import EditUserForm from "./components/edit_user";
+import ViewUser from "./components/view_user";
 // import DataTable from "./components/datatable";
 
 function App() {
@@ -89,6 +91,10 @@ function App() {
             </AdminPanel>
           }
         />
+        <Route path="/admin/edit-user/:userId" element={<AdminPanel><EditUserForm /></AdminPanel>} />
+        <Route path="/admin/view-user/:userId" element={<AdminPanel><ViewUser /></AdminPanel>} >
+
+        </Route>
       </Routes>
     </Router>
   );

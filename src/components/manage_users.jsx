@@ -2,12 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import $ from "jquery";
 import "datatables.net-dt";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 const DataTable = () => {
   const tableRef = useRef(null);
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Initialize useNavigate
 
   // Fetch data from API
   useEffect(() => {
@@ -47,7 +49,7 @@ const DataTable = () => {
             title: "Action",
             data: null,
             render: function (data, type, row) {
-              return `
+              return ` 
                 <button class="view-btn btn btn-info btn-sm" data-id="${row._id}">View</button>
                 <button class="edit-btn btn btn-warning btn-sm" data-id="${row._id}">Edit</button>
                 <button class="delete-btn btn btn-danger btn-sm" data-id="${row._id}">Delete</button>
@@ -69,35 +71,34 @@ const DataTable = () => {
         handleDelete($(this).data("id"));
       });
     }
-  }, [users]); // Run when `users` state changes
+
+    // Cleanup the DataTable on component unmount
+    return () => {
+      if ($.fn.DataTable.isDataTable(tableRef.current)) {
+        $(tableRef.current).DataTable().destroy();
+      }
+    };
+  }, [users]);
 
   // View User
   const handleView = (id) => {
-    axios.get(`http://localhost:5000/api/users/${id}`).then((response) => {
-      alert(`User Details:\nName: ${response.data.fullname}\nEmail: ${response.data.email}`);
-    });
+    // axios.get(`http://localhost:5000/api/users/users/${id}`).then((response) => {
+    //   alert(`User Details:\nName: ${response.data.fullname}\nEmail: ${response.data.email}`);
+    // });
+    navigate(`/admin/view-user/${id}`); // Correct usage of navigate
   };
 
   // Edit User
   const handleEdit = (id) => {
-    const newName = prompt("Enter new name:");
-    const newEmail = prompt("Enter new email:");
-    if (newName && newEmail) {
-      axios
-        .put(`http://localhost:5000/api/users/${id}`, { fullname: newName, email: newEmail })
-        .then(() => {
-          alert("User updated successfully!");
-          fetchUsers();
-        })
-        .catch(() => alert("Failed to update user"));
-    }
+    alert(`Edit User with ID: ${id}`);
+    navigate(`/admin/edit-user/${id}`); // Correct usage of navigate
   };
 
   // Delete User
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       axios
-        .delete(`http://localhost:5000/api/users/${id}`)
+        .delete(`http://localhost:5000/api/users/users/${id}`)
         .then(() => {
           alert("User deleted successfully!");
           fetchUsers();
@@ -122,7 +123,6 @@ const DataTable = () => {
             </tr>
           </thead>
           <tbody>
-            {/* Manually map over the users data */}
             {users.map((user, index) => (
               <tr key={user._id}>
                 <td>{index + 1}</td>
