@@ -1,12 +1,17 @@
-const express = require("express");
-const multer = require("multer");
-const path = require("path");
-const jwt = require("jsonwebtoken");
-const bcrypt = require("bcryptjs");
-const nodemailer = require("nodemailer");
-const User = require("../models/User");
+/* eslint-disable no-undef */
+import express from "express";
+import multer from "multer";
+import path from "path";
+import jwt from "jsonwebtoken";
+// import bcrypt from "bcryptjs";
+import nodemailer from "nodemailer";
+import User from "../models/User.js";
+import dotenv from 'dotenv';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
+import fs from 'fs';
 const router = express.Router();
-require("dotenv").config();
+dotenv.config();
 
 // Multer Storage Configuration
 const storage = multer.diskStorage({
@@ -23,7 +28,7 @@ const upload = multer({ storage: storage });
 const transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: process.env.EMAIL_USER, // Your email
+    user: process.env.EMAIL_USER || '', // Your email
     pass: process.env.EMAIL_PASS, // Your password or app password
   },
 });
@@ -44,7 +49,9 @@ router.post("/add-user", upload.single("profilePic"), async (req, res) => {
     } = req.body;
 
     if (!fullname || !email || !mobile || !password || !gender || !state) {
-      return res.status(400).json({ error: "All required fields must be provided." });
+      return res
+        .status(400)
+        .json({ error: "All required fields must be provided." });
     }
 
     // Check if user exists
@@ -113,7 +120,8 @@ router.post("/add-user", upload.single("profilePic"), async (req, res) => {
     });
 
     res.status(201).json({
-      message: "User added successfully. Check your email to verify your account.",
+      message:
+        "User added successfully. Check your email to verify your account.",
       user: newUser,
     });
   } catch (error) {
@@ -143,6 +151,7 @@ router.get("/verify-email/:token", async (req, res) => {
     );
   } catch (error) {
     return res.redirect(
+      console.log(error),
       "http://localhost:5173/login?status=error&message=Verification failed or token expired."
     );
   }
@@ -156,18 +165,26 @@ router.post("/login", async (req, res) => {
     // Check if user exists
     const user = await User.findOne({ email });
     if (!user) {
-      return res.status(400).json({ status: "error", message: "Email is not registered!" });
+      return res
+        .status(400)
+        .json({ status: "error", message: "Email is not registered!" });
     }
 
     // Verify password
     if (password !== user.password) {
-      return res.status(400).json({ status: "error", message: "Incorrect password!" });
+      return res
+        .status(400)
+        .json({ status: "error", message: "Incorrect password!" });
     }
 
     // Generate JWT Token
-    const token = jwt.sign({ userId: user._id, role: user.role }, process.env.JWT_SECRET, {
-      expiresIn: "1h", // Token expires in 1 hour
-    });
+    const token = jwt.sign(
+      { userId: user._id, role: user.role },
+      process.env.JWT_SECRET,
+      {
+        expiresIn: "1h", // Token expires in 1 hour
+      }
+    );
 
     // Send token & user details
     res.status(200).json({
@@ -182,6 +199,7 @@ router.post("/login", async (req, res) => {
       },
     });
   } catch (error) {
+    console.error(error);
     res.status(500).json({ error: "Something went wrong." });
   }
 });
@@ -197,7 +215,7 @@ router.get("/all-users", async (req, res) => {
 });
 
 // View User by ID (GET)
-router.get("/users/:id", async (req, res) => {
+router.get("/fetch-user/:id", async (req, res) => {
   try {
     const user = await User.findById(req.params.id);
     if (!user) {
@@ -205,22 +223,49 @@ router.get("/users/:id", async (req, res) => {
     }
     res.json(user);
   } catch (error) {
-    res.status(500).json({ message: "Error fetching user details",error:error.message});
+    res
+      .status(500)
+      .json({ message: "Error fetching user details", error: error.message });
   }
 });
 
 // Update User by ID (PUT)
-router.put("/:id", async (req, res) => {
+router.put("/update-user/:id", upload.single("profilePic"), async (req, res) => {
   try {
-    const updatedUser = await User.findByIdAndUpdate(req.params.id, req.body, { new: true });
+    const user = await User.findById(req.params.id);
+
+    // Step 1: Delete old profile picture if it exists
+    if (user.profilePic) {
+      const __filename = fileURLToPath(import.meta.url);
+      const __dirname = dirname(__filename);
+      const oldPath = path.join(__dirname, "..", "public", "images/profile_pictures", user.profilePic);
+      if (fs.existsSync(oldPath)) {
+        fs.unlinkSync(oldPath);
+      }
+    }
+
+    // Step 2: Prepare update data
+    const updateData = {
+      ...req.body,
+      hobbies: req.body.hobbies ? JSON.parse(req.body.hobbies) : user.hobbies, // Keep existing hobbies if not provided
+      profilePic: req.file ? req.file.filename : user.profilePic // Keep existing profilePic if not provided
+    };
+
+    // Step 3: Save new data in DB
+    const updatedUser = await User.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true }
+    );
+
     res.json(updatedUser);
   } catch (error) {
-    res.status(500).json({ message: "Error updating user",error:error.message });
+    res.status(500).json({ message: "Error updating user", error: error.message });
   }
 });
 
 // Delete User by ID (DELETE)
-router.delete("/:id", async (req, res) => {
+router.delete("/delete-user/:id", async (req, res) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
     if (!deletedUser) {
@@ -228,8 +273,10 @@ router.delete("/:id", async (req, res) => {
     }
     res.json({ message: "User deleted successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Error deleting user" ,error:error.message});
+    res
+      .status(500)
+      .json({ message: "Error deleting user", error: error.message });
   }
 });
 
-module.exports = router;
+export default router;

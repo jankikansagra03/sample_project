@@ -1,5 +1,5 @@
-const express = require("express");
-const Contact = require("../models/Contact");
+import express from "express";
+import Contact from "../models/Contact.js";
 const router = express.Router();
 
 // Insert data into MongoDB
@@ -46,4 +46,4 @@ router.get("/all-inquiries", async (req, res) => {
   }
 });
 
-module.exports = router;
+export default router;

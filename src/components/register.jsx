@@ -314,39 +314,7 @@ function Register() {
                         <div className="error text-red-500 text-sm mt-1"></div>
                       </div>
 
-                      {/* Hobbies */}
-                      {/* <div>
-                        <label className="block mb-2 text-sm text-amber-800">
-                          Hobbies
-                        </label>
-                        <div className="flex gap-4">
-                          <label className="text-amber-800">
-                            <input
-                              type="checkbox"
-                              name="hobbies"
-                              value="Reading"
-                            />{" "}
-                            Reading
-                          </label>
-                          <label className="text-amber-800">
-                            <input
-                              type="checkbox"
-                              name="hobbies"
-                              value="Coding"
-                            />{" "}
-                            Coding
-                          </label>
-                          <label className="text-amber-800">
-                            <input
-                              type="checkbox"
-                              name="hobbies"
-                              value="Music"
-                            />{" "}
-                            Music
-                          </label>
-                        </div>
-                        <div className="error text-red-500 text-sm mt-1"></div>
-                      </div> */}
+                    
                       <div className="hobbies-group">
                         <label className="block mb-2 text-sm text-amber-800">Hobbies</label>
                         <div className="flex gap-4">

@@ -98,7 +98,7 @@ const DataTable = () => {
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       axios
-        .delete(`http://localhost:5000/api/users/users/${id}`)
+        .delete(`http://localhost:5000/api/users/delete-user/${id}`)
         .then(() => {
           alert("User deleted successfully!");
           fetchUsers();

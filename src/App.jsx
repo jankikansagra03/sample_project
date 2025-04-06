@@ -32,13 +32,13 @@ function App() {
   });
 
   useEffect(() => {
-    if (userSession) {
+    if (userIsLoggedIn) {
       setUserIsLoggedIn(true);
     } else {
       setUserIsLoggedIn(false);
     }
 
-    if (adminSession) {
+    if (isAdminLoggedIn) {
       setIsAdminLoggedIn(true);
     } else {
       setIsAdminLoggedIn(false);
